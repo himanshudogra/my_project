@@ -1,23 +1,31 @@
-name: Simple CI Pipeline
+name: Create and Push File
 
 on:
   push:
     branches:
-      - master  # Trigger the workflow on pushes to the 'master' branch
+      - master  # Trigger on push to the 'master' branch
   pull_request:
     branches:
-      - master  # Trigger on pull requests to the 'master' branch
+      - master  # Trigger on pull requests to 'master'
 
 jobs:
   build:
-    runs-on: ubuntu-latest  # Run on the latest Ubuntu environment
+    runs-on: ubuntu-latest  # Running on the latest Ubuntu environment
 
     steps:
       - name: Checkout Code
         uses: actions/checkout@v3  # Checkout the repository
 
-      - name: Run a Simple Shell Command
+      - name: Create a New File and Add Content
         run: |
-          echo "Hello, this is a simple test of the workflow!"
-          # You can add any commands you need to run here, such as building, testing, or deployment scripts
-          
+          echo "This is a new file created by GitHub Actions!" > newfile.txt
+          cat newfile.txt  # Show the content of the file created
+
+      - name: Commit and Push New File
+        run: |
+          git config --global user.name "github-actions"
+          git config --global user.email "github-actions@github.com"
+          git add newfile.txt  # Stage the new file
+          git commit -m "Add newfile.txt from GitHub Actions" || echo "No changes to commit"
+          git push origin master  # Push changes to the 'master' branch
+
