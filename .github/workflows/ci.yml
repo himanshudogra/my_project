@@ -27,5 +27,8 @@ jobs:
           git config --global user.email "github-actions@github.com"
           git add newfile.txt  # Stage the new file
           git commit -m "Add newfile.txt from GitHub Actions" || echo "No changes to commit"
-          git push origin master  # Push changes to the 'master' branch
+          git remote set-url origin https://github.com/himanshudogra/my_project.git
+          git push https://github.com/himanshudogra/my_project.git HEAD:master  # Push changes to 'master' branch
+        env:
+          GITHUB_TOKEN: ${{ secrets.GH_TOKEN }}  # Use the secret token for authentication
 
