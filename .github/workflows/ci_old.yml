@@ -1,0 +1,22 @@
+name: Simple CI Pipeline
+
+on:
+  push:
+    branches:
+      - master  # Trigger the workflow on pushes to the 'master' branch
+  pull_request:
+    branches:
+      - master  # Trigger on pull requests to the 'master' branch
+
+jobs:
+  build:
+    runs-on: ubuntu-latest  # Run on the latest Ubuntu environment
+
+    steps:
+      - name: Checkout Code
+        uses: actions/checkout@v3  # Checkout the repository
+
+      - name: Run a Simple Shell Command
+        run: |
+          echo "Hello, this is a simple test of the workflow!"
+          # You can add any commands you need to run here, such as building, testing, or deployment scripts

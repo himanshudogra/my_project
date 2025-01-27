@@ -1,34 +1,37 @@
-name: Create and Push File
+name: Python CI
 
 on:
   push:
     branches:
-      - master  # Trigger on push to the 'master' branch
+      - main  # Trigger on push to 'main' branch
   pull_request:
     branches:
-      - master  # Trigger on pull requests to 'master'
+      - main  # Trigger on pull requests to 'main'
 
 jobs:
-  build:
-    runs-on: ubuntu-latest  # Running on the latest Ubuntu environment
+  test:
+    runs-on: ubuntu-latest  # Runs the workflow on the latest Ubuntu
 
     steps:
-      - name: Checkout Code
-        uses: actions/checkout@v3  # Checkout the repository
+      - name: Checkout code
+        uses: actions/checkout@v3  # Checkout the repository code
 
-      - name: Create a New File and Add Content
-        run: |
-          echo "This is a new file created by GitHub Actions!" > newfile.txt
-          cat newfile.txt  # Show the content of the file created
+      - name: Set up Python
+        uses: actions/setup-python@v3
+        with:
+          python-version: '3.9'  # Specify the Python version
 
-      - name: Commit and Push New File
+      - name: Install dependencies
         run: |
-          git config --global user.name "github-actions"
-          git config --global user.email "github-actions@github.com"
-          git add newfile.txt  # Stage the new file
-          git commit -m "Add newfile.txt from GitHub Actions" || echo "No changes to commit"
-          git remote set-url origin https://github.com/himanshudogra/my_project.git
-          git push https://github.com/himanshudogra/my_project.git HEAD:master  # Push changes to 'master' branch
-        env:
-          GITHUB_TOKEN: ${{ secrets.GH_TOKEN }}  # Use the secret token for authentication
+          pip install -r requirements.txt  # Install dependencies
+
+      - name: Run tests with pytest
+        run: |
+          pytest tests/ --junitxml=report.xml  # Run the tests and generate a report
+
+      - name: Upload test report
+        uses: actions/upload-artifact@v3
+        with:
+          name: test-report
+          path: report.xml  # Upload the generated test report
 
