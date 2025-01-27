@@ -24,7 +24,7 @@ pipeline {
             steps {
                 script {
                     // Configure Git user
-                    sh 'git config --global user.name "jenkins"'
+                    sh 'git config --global user.name "himanshudogra"'
                     sh 'git config --global user.email "himanshudogra96@gmail.com"'
 
                     // Add and commit changes
