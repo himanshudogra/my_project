@@ -4,6 +4,9 @@ pipeline {
         stage('Checkout') {
             steps {
                 script {
+                    // Ensure the .ssh directory exists
+                    sh 'mkdir -p ~/.ssh'
+                    
                     // Add GitHub's SSH key to known_hosts
                     sh 'ssh-keyscan github.com >> ~/.ssh/known_hosts'
                 }
