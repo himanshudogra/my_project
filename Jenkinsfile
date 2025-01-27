@@ -31,8 +31,11 @@ pipeline {
                     sh 'git add .'
                     sh 'git commit -m "Add example.txt file"'
 
-                    // Push changes to the master branch
-                    sh 'git push origin master'
+                    // Explicitly set credentials for git push
+                    sh '''
+                    git remote set-url origin https://$GIT_USERNAME:$GIT_TOKEN@github.com/himanshudogra/my_project.git
+                    git push origin master
+                    '''
                 }
             }
         }
