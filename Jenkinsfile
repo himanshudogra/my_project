@@ -33,7 +33,7 @@ pipeline {
 
                     // Explicitly set credentials for git push
                     sh '''
-                    git remote set-url origin https://$GIT_USERNAME:$GIT_TOKEN@github.com/himanshudogra/my_project.git
+                    git remote set-url origin https://himanshudogra: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@github.com/himanshudogra/my_project.git
                     git push origin master
                     '''
                 }
