@@ -20,8 +20,8 @@ pipeline {
             steps {
                 script {
                     // Configure Git user (if needed)
-                    sh 'git config --global user.name "himanshudogra"'
-                    sh 'git config --global user.email "himanshudogra96@gmail.com"'
+                    //sh 'git config --global user.name "himanshudogra"'
+                    //sh 'git config --global user.email "himanshudogra96@gmail.com"'
 
                     // Add and commit changes
                     sh 'git add .'
