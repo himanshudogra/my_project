@@ -28,7 +28,7 @@ pipeline {
                     sh 'git commit -m "Add example.txt file"'
                     
                     // Push changes to the repository
-                    sh 'git push origin main'
+                    sh 'git push origin master'
                 }
             }
         }
