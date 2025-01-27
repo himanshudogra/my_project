@@ -4,10 +4,7 @@ pipeline {
     stages {
         stage('Checkout') {
             steps {
-                node {
-                    // Checkout the repository
-                    git url: 'https://github.com/himanshudogra/my_project.git', credentialsId: 'github-credentials'
-                }
+                git url: 'https://github.com/himanshudogra/my_project.git', credentialsId: 'github-credentials'
             }
         }
         // Add other stages as needed
