@@ -1,0 +1,40 @@
+name: CI Pipeline
+
+on:
+  push:
+    branches:
+      - main
+  pull_request:
+    branches:
+      - main
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+
+    steps:
+      # Step 1: Checkout the code from the repository
+      - name: Checkout Code
+        uses: actions/checkout@v3
+
+      # Step 2: Set up JDK 11 (if you're using Java)
+      - name: Set up JDK 11
+        uses: actions/setup-java@v3
+        with:
+          java-version: '11'
+
+      # Step 3: Install Dependencies (for Java Maven project)
+      - name: Install Dependencies
+        run: mvn install
+
+      # Step 4: Run Tests (execute unit tests in Maven)
+      - name: Run Tests
+        run: mvn test
+
+      # Step 5: Archive the test results (e.g., Surefire reports)
+      - name: Archive Results
+        if: always()
+        uses: actions/upload-artifact@v3
+        with:
+          name: test-results
+          path: target/surefire-reports
