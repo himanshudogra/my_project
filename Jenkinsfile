@@ -2,16 +2,14 @@ pipeline {
     agent any
 
     environment {
-        GIT_CREDENTIALS = credentials('github-credentials')  // Add this line for credentials
-        GIT_USERNAME = credentials('github-credentials').username  // Get GitHub username
-        GIT_TOKEN = credentials('github-credentials').password  // Get GitHub token
+        GIT_CREDENTIALS = 'github-credentials'  // Reference the credentials ID
     }
 
     stages {
         stage('Checkout') {
             steps {
                 // Checkout code from your Git repository using credentials
-                git url: 'https://github.com/himanshudogra/my_project.git', credentialsId: 'github-credentials'
+                git url: 'https://github.com/himanshudogra/my_project.git', credentialsId: GIT_CREDENTIALS
             }
         }
         stage('Modify Files') {
@@ -34,10 +32,12 @@ pipeline {
                     sh 'git commit -m "Add example.txt file"'
 
                     // Set remote URL with credentials (GitHub username and token)
-                    sh '''
-                    git remote set-url origin https://$GIT_USERNAME:$GIT_TOKEN@github.com/himanshudogra/my_project.git
-                    git push origin master
-                    '''
+                    withCredentials([usernamePassword(credentialsId: 'github-credentials', usernameVariable: 'GIT_USERNAME', passwordVariable: 'GIT_TOKEN')]) {
+                        sh '''
+                        git remote set-url origin https://$GIT_USERNAME:$GIT_TOKEN@github.com/himanshudogra/my_project.git
+                        git push origin master
+                        '''
+                    }
                 }
             }
         }
