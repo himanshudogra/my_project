@@ -3,6 +3,8 @@ pipeline {
 
     environment {
         GIT_CREDENTIALS = credentials('github-credentials')  // Add this line for credentials
+        GIT_USERNAME = credentials('github-credentials').username  // Get GitHub username
+        GIT_TOKEN = credentials('github-credentials').password  // Get GitHub token
     }
 
     stages {
@@ -24,16 +26,16 @@ pipeline {
             steps {
                 script {
                     // Configure Git user
-                    sh 'git config --global user.name "himanshudogra"'
+                    sh 'git config --global user.name "jenkins"'
                     sh 'git config --global user.email "himanshudogra96@gmail.com"'
 
                     // Add and commit changes
                     sh 'git add .'
                     sh 'git commit -m "Add example.txt file"'
 
-                    // Explicitly set credentials for git push
+                    // Set remote URL with credentials (GitHub username and token)
                     sh '''
-                    git remote set-url origin https://himanshudogra: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@github.com/himanshudogra/my_project.git
+                    git remote set-url origin https://$GIT_USERNAME:$GIT_TOKEN@github.com/himanshudogra/my_project.git
                     git push origin master
                     '''
                 }
