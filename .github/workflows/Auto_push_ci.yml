@@ -22,8 +22,7 @@ jobs:
         run: |
           git fetch origin master  # Ensure we have the latest origin/master
           
-          # Check if HEAD is ahead of origin/master
-          if git rev-list --left-right --count HEAD...origin/master | awk '{print $1}' | grep -q '[^0]'; then
+          if [ "$(git rev-list --count origin/master..HEAD)" -gt 0 ]; then
             echo "HEAD is ahead of origin/master, pushing changes..."
             git push origin master
           else
