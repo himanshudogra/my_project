@@ -1,7 +1,7 @@
-# tests/test_sample.py
-def test_addition():
-    assert 1 + 1 == 2
+from main import add
 
-def test_subtraction():
-    assert 3 - 1 == 2
+def test_add():
+    assert add(2, 3) == 5
+    assert add(-1, 1) == 0
+    assert add(0, 0) == 0
 
